@@ -21,7 +21,9 @@
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" (click)="logIn(email, password)" expand="block">Loguear</ion-button>
+        <ion-button type="submit" (click)="logIn(email, password)" expand="block">Loguear<ion-spinner name="dots">
+          </ion-spinner>
+        </ion-button>
       </ion-col>
     </ion-row>
   </form>

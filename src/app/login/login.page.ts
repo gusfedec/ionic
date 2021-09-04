@@ -36,6 +36,11 @@ export class LoginPage implements OnInit {
         console.log(error.code);
         let err = this.errorsService.getErrors(error.code);
         this.toastService.presentToast(err);
+        //this.toastService.presentLoading();
+        this.toastService.presentLoadingWithOptions();
+        setTimeout(() => {
+          this.toastService.cancelLoading();
+        }, 1000);
       });
   }
 }
