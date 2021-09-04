@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication-service';
 import { ToastService } from '../shared/toast.service';
+import { ErrorsService } from '../shared/errors.service';
 
 @Component({
   selector: 'app-registration',
@@ -12,7 +13,8 @@ export class RegistrationPage implements OnInit {
   constructor(
     public authService: AuthenticationService,
     public router: Router,
-    public toastService: ToastService
+    public toastService: ToastService,
+    public errorsService: ErrorsService
   ) {}
 
   ngOnInit() {}
@@ -26,7 +28,9 @@ export class RegistrationPage implements OnInit {
         this.router.navigate(['dashboard']);
       })
       .catch((error) => {
-        this.toastService.presentToast(error.message);
+        console.log(error.code);
+        let err = this.errorsService.getErrors(error.code);
+        this.toastService.presentToast(err);
       });
   }
 }
