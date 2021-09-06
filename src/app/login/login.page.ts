@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginPage implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
+  cargando: boolean = false;
 
   constructor(
     public authService: AuthenticationService,
@@ -35,8 +36,10 @@ export class LoginPage implements OnInit {
 
   logIn() {
     this.isSubmitted = true;
+    this.cargando = true;
     if (!this.loginForm.valid) {
       console.log('Please provide all the required values!');
+      this.cargando = false;
       return false;
     } else {
       console.log(this.loginForm.value);
@@ -57,11 +60,12 @@ export class LoginPage implements OnInit {
           let err = this.errorsService.getErrors(error.code);
           this.toastService.presentToast(err);
           //this.toastService.presentLoading();
-          this.toastService.presentLoadingWithOptions();
-          setTimeout(() => {
-            this.toastService.cancelLoading();
-          }, 1000);
-        });
+          // this.toastService.presentLoadingWithOptions();
+          // setTimeout(() => {
+          //   this.toastService.cancelLoading();
+          // }, 1000);
+        })
+        .finally(() => (this.cargando = false));
     }
   }
 }

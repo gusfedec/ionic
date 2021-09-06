@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegistrationPage implements OnInit {
   registerForm: FormGroup;
   isSubmitted = false;
+  cargando: boolean = false;
 
   constructor(
     public authService: AuthenticationService,
@@ -34,9 +35,11 @@ export class RegistrationPage implements OnInit {
   }
 
   signUp() {
+    this.cargando = true;
     this.isSubmitted = true;
     if (!this.registerForm.valid) {
       console.log('Please provide all the required values!');
+      this.cargando = false;
       return false;
     } else {
       console.log(this.registerForm.value);
@@ -54,7 +57,8 @@ export class RegistrationPage implements OnInit {
           console.log(error.code);
           let err = this.errorsService.getErrors(error.code);
           this.toastService.presentToast(err);
-        });
+        })
+        .finally(() => (this.cargando = false));
     }
   }
 }
