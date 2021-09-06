@@ -5,7 +5,7 @@ import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'registration',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -35,7 +35,10 @@ const routes: Routes = [
   },
   {
     path: 'messagelogin',
-    loadChildren: () => import('./messagelogin/messagelogin.module').then( m => m.MessageloginPageModule)
+    loadChildren: () =>
+      import('./messagelogin/messagelogin.module').then(
+        (m) => m.MessageloginPageModule
+      ),
   },
 ];
 

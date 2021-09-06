@@ -1,43 +1,70 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Iniciar de sesión</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
-  <form [formGroup]="loginForm" (ngSubmit)="logIn()" novalidate>
-    <ion-item lines="full">
-      <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input formControlName="email" type="email"></ion-input>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
-      Campo Obligatorio.
-    </span>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.email">
-      Debe ser un correo electrónico válido.
-    </span>
+  <ion-grid style="height: 100%;">
+    <ion-row class="ion-justify-content-center" style="height: 100%;">
+      <ion-col class="ion-align-self-center">
+        <figure class="ion-text-center">
+          <img src="assets/img/logo.png" alt="Platzi Logo" width="100px" />
+        </figure>
+        <div>
+          <form [formGroup]="loginForm" (ngSubmit)="logIn()" novalidate>
+            <ion-item lines="full">
+              <ion-label position="floating" color="success">Correo Electrónico</ion-label>
+              <ion-icon name="mail-open" slot="start"></ion-icon>
+              <ion-input formControlName="email" type="email"></ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+              Campo Obligatorio.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.email">
+              Debe ser un correo electrónico válido.
+            </span>
 
-    <ion-item lines="full">
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input formControlName="password" type="password"></ion-input>
-    </ion-item>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
-      Campo Obligatorio.
-    </span>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
-      Debe tener mínimo 6 caracteres de longitud.
-    </span>
+            <ion-item lines="full">
+              <ion-label position="floating" color="success">Contraseña</ion-label>
+              <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+              <ion-input formControlName="password" type="password"></ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+              Campo Obligatorio.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
+              Debe tener mínimo 6 caracteres de longitud.
+            </span>
 
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" expand="block">Loguear<ion-spinner *ngIf="cargando" name="dots">
-          </ion-spinner>
-        </ion-button>
+            <ion-row>
+              <ion-col>
+                <ion-button color="success" shape="round" class="submit-btn button-block" type="submit"
+                  [disabled]="!loginForm.valid">Loguear
+                  <ion-spinner *ngIf="cargando" name="dots">
+                  </ion-spinner>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </div>
       </ion-col>
     </ion-row>
-  </form>
-  <ion-button [routerLink]="['/registration']" expand="block">Registrar</ion-button>
+  </ion-grid>
+
 </ion-content>
+<ion-footer>
+  <ion-grid style="height: 100%;">
+    <ion-row style="height: 100%;">
+      <ion-col class="ion-align-self-center">
+        <div>
+          <ion-button color="success" shape="round" fill="outline" class="button-block"
+            [routerLink]="['/registration']">Registrar</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

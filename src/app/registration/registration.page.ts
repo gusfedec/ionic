@@ -61,4 +61,7 @@ export class RegistrationPage implements OnInit {
         .finally(() => (this.cargando = false));
     }
   }
+  goToLoginPage() {
+    this.router.navigate(['login']);
+  }
 }
