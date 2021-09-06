@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication-service';
 import { ToastService } from '../shared/toast.service';
 import { ErrorsService } from '../shared/errors.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -10,27 +11,50 @@ import { ErrorsService } from '../shared/errors.service';
   styleUrls: ['./registration.page.scss'],
 })
 export class RegistrationPage implements OnInit {
+  registerForm: FormGroup;
+  isSubmitted = false;
+
   constructor(
     public authService: AuthenticationService,
     public router: Router,
     public toastService: ToastService,
-    public errorsService: ErrorsService
+    public errorsService: ErrorsService,
+    public formBuilder: FormBuilder
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
 
-  signUp(email, password) {
-    this.authService
-      .RegisterUser(email.value, password.value)
-      .then((res) => {
-        // Do something here
-        //this.authService.SendVerificationMail();
-        this.router.navigate(['dashboard']);
-      })
-      .catch((error) => {
-        console.log(error.code);
-        let err = this.errorsService.getErrors(error.code);
-        this.toastService.presentToast(err);
-      });
+  get errorControl() {
+    return this.registerForm.controls;
+  }
+
+  signUp() {
+    this.isSubmitted = true;
+    if (!this.registerForm.valid) {
+      console.log('Please provide all the required values!');
+      return false;
+    } else {
+      console.log(this.registerForm.value);
+      this.authService
+        .RegisterUser(
+          this.registerForm.value.email,
+          this.registerForm.value.password
+        )
+        .then((res) => {
+          // Do something here
+          //this.authService.SendVerificationMail();
+          this.router.navigate(['dashboard']);
+        })
+        .catch((error) => {
+          console.log(error.code);
+          let err = this.errorsService.getErrors(error.code);
+          this.toastService.presentToast(err);
+        });
+    }
   }
 }

@@ -8,24 +8,36 @@
 </ion-header>
 
 <ion-content>
-  <form>
+  <form [formGroup]="registerForm" (ngSubmit)="signUp()" novalidate>
     <ion-item lines="full">
       <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input type="email" #email required></ion-input>
+      <ion-input formControlName="email" type="email"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+      Campo Obligatorio.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.email">
+      Debe ser un correo electrónico válido.
+    </span>
 
     <ion-item lines="full">
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" #password required></ion-input>
+      <ion-input formControlName="password" type="password"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+      Campo Obligatorio.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
+      Debe tener mínimo 6 caracteres de longitud.
+    </span>
 
     <ion-row>
       <ion-col>
-        <ion-button type="submit" (click)="signUp(email, password)" expand="block">Registrar</ion-button>
+        <ion-button type="submit" expand="block">Registrar</ion-button>
       </ion-col>
     </ion-row>
   </form>
 
-  <ion-button type="submit" [routerLink]="['/login']" expand="block">Loguear</ion-button>
-  <ion-button type="submit" [routerLink]="['/dashboard']" expand="block">Panel de administración</ion-button>
+  <ion-button [routerLink]="['/login']" expand="block">Loguear</ion-button>
+  <ion-button [routerLink]="['/dashboard']" expand="block">Panel de administración</ion-button>
 </ion-content>
