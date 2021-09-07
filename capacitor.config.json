@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "ionicAuthFirebase",
+	"appId": "com.gusfedec.photo_tick",
+	"appName": "Photo Tick",
 	"webDir": "www",
 	"bundledWebRuntime": false
 }
