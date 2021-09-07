@@ -2,5 +2,10 @@
 	"appId": "com.gusfedec.photo_tick",
 	"appName": "Photo Tick",
 	"webDir": "www",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 3000
+		}
+	}
 }
