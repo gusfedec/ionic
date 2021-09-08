@@ -40,12 +40,28 @@ export class AuthenticationService {
 
   // Login in with email/password
   SignIn(email, password) {
-    return this.ngFireAuth.signInWithEmailAndPassword(email, password);
+    return this.ngFireAuth
+      .signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        console.log(result);
+
+        this.SetUserData(result.user);
+      })
+      .catch((e) => {
+        window.alert(e.message);
+      });
   }
 
   // Register user with email/password
   RegisterUser(email, password) {
-    return this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+    return this.ngFireAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        this.SetUserData(result.user);
+      })
+      .catch((e) => {
+        window.alert(e.message);
+      });
   }
 
   // Email verification when new user register
@@ -114,13 +130,17 @@ export class AuthenticationService {
     const userRef: AngularFirestoreDocument<any> = this.afStore.doc(
       `users/${user.uid}`
     );
+    console.log(userRef);
+
     const userData: User = {
       uid: user.uid,
+      id: null,
       email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
+      perfil: null,
+      sexo: null,
     };
+    console.log(userData);
+
     return userRef.set(userData, {
       merge: true,
     });
