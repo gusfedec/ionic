@@ -64,16 +64,6 @@ export class AuthenticationService {
       });
   }
 
-  // Email verification when new user register
-  // Email verification when new user register
-  /* SendVerificationMail() {
-    return this.ngFireAuth.currentUser
-      .then((u) => u.sendEmailVerification())
-      .then(() => {
-        this.router.navigate(['verify-email']);
-      });
-  } */
-
   // Recover password
   PasswordRecover(passwordResetEmail) {
     return this.ngFireAuth

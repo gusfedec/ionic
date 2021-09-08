@@ -49,8 +49,6 @@ export class RegistrationPage implements OnInit {
           this.registerForm.value.password
         )
         .then((res) => {
-          // Do something here
-          //this.authService.SendVerificationMail();
           this.router.navigate(['dashboard']);
         })
         .catch((error) => {
