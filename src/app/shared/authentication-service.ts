@@ -122,12 +122,9 @@ export class AuthenticationService {
     );
     console.log(userRef);
 
-    const userData: User = {
+    const userData = {
       uid: user.uid,
-      id: null,
       email: user.email,
-      perfil: null,
-      sexo: null,
     };
     console.log(userData);
 
