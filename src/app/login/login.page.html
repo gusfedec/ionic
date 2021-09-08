@@ -54,7 +54,45 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button color="success" shape="round" class="submit-btn button-block" (click)="loguearAs('admin')">
+          Admin
+          <ion-spinner *ngIf="cargando" name="dots">
+          </ion-spinner>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="success" shape="round" class="submit-btn button-block" (click)="loguearAs('invitado')">
+          Invitado
+          <ion-spinner *ngIf="cargando" name="dots">
+          </ion-spinner>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="success" shape="round" class="submit-btn button-block" (click)="loguearAs('usuario')">
+          Usuario
+          <ion-spinner *ngIf="cargando" name="dots">
+          </ion-spinner>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="success" shape="round" class="submit-btn button-block" (click)="loguearAs('anonimo')">
+          Anonimo
+          <ion-spinner *ngIf="cargando" name="dots">
+          </ion-spinner>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button color="success" shape="round" class="submit-btn button-block" (click)="loguearAs('tester')">
+          Tester
+          <ion-spinner *ngIf="cargando" name="dots">
+          </ion-spinner>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 <ion-footer>
   <ion-grid style="height: 100%;">

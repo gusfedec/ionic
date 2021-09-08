@@ -68,4 +68,56 @@ export class LoginPage implements OnInit {
         .finally(() => (this.cargando = false));
     }
   }
+
+  loguearAs(profile) {
+    this.cargando = true;
+    switch (profile) {
+      case 'admin':
+        var data = {
+          email: 'admin@admin.com',
+          password: '111111',
+        };
+        break;
+      case 'invitado':
+        var data = {
+          email: 'invitado@invitado.com',
+          password: '222222',
+        };
+        break;
+      case 'usuario':
+        var data = {
+          email: 'usuario@usuario.com',
+          password: '333333',
+        };
+        break;
+      case 'anonimo':
+        var data = {
+          email: 'anonimo@anonimo.com',
+          password: '444444',
+        };
+        break;
+      case 'tester':
+        var data = {
+          email: 'tester@tester.com',
+          password: '555555',
+        };
+        break;
+
+      default:
+        break;
+    }
+
+    this.authService
+      .SignIn(data.email, data.password)
+      .then((res) => {
+        console.log(res);
+        this.router.navigate(['messagelogin']);
+      })
+      .catch((error) => {
+        console.log(error.code);
+        let err = this.errorsService.getErrors(error.code);
+        this.toastService.presentToast(err);
+      })
+      .finally(() => (this.cargando = false));
+  }
 }
