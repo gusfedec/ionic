@@ -46,9 +46,6 @@ export class AuthenticationService {
         console.log(result);
 
         this.SetUserData(result.user);
-      })
-      .catch((e) => {
-        window.alert(e.message);
       });
   }
 
@@ -58,9 +55,6 @@ export class AuthenticationService {
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         this.SetUserData(result.user);
-      })
-      .catch((e) => {
-        window.alert(e.message);
       });
   }
 
