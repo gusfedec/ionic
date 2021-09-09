@@ -14,6 +14,11 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
   cargando: boolean = false;
+  cargandoAdmin: boolean = false;
+  cargandoUsuario: boolean = false;
+  cargandoInvitado: boolean = false;
+  cargandoAnonimo: boolean = false;
+  cargandoTester: boolean = false;
 
   constructor(
     public authService: AuthenticationService,
@@ -70,33 +75,37 @@ export class LoginPage implements OnInit {
   }
 
   loguearAs(profile) {
-    this.cargando = true;
     switch (profile) {
       case 'admin':
+        this.cargandoAdmin = true;
         var data = {
           email: 'admin@admin.com',
           password: '111111',
         };
         break;
       case 'invitado':
+        this.cargandoInvitado = true;
         var data = {
           email: 'invitado@invitado.com',
           password: '222222',
         };
         break;
       case 'usuario':
+        this.cargandoUsuario = true;
         var data = {
           email: 'usuario@usuario.com',
           password: '333333',
         };
         break;
       case 'anonimo':
+        this.cargandoAnonimo = true;
         var data = {
           email: 'anonimo@anonimo.com',
           password: '444444',
         };
         break;
       case 'tester':
+        this.cargandoTester = true;
         var data = {
           email: 'tester@tester.com',
           password: '555555',
@@ -118,6 +127,12 @@ export class LoginPage implements OnInit {
         let err = this.errorsService.getErrors(error.code);
         this.toastService.presentToast(err);
       })
-      .finally(() => (this.cargando = false));
+      .finally(() => {
+        this.cargandoAdmin = false;
+        this.cargandoInvitado = false;
+        this.cargandoUsuario = false;
+        this.cargandoAnonimo = false;
+        this.cargandoTester = false;
+      });
   }
 }
