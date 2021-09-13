@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content id="container">
-  <ion-grid style="height: 100%;">
+  <ion-grid>
     <ion-row class="ion-justify-content-center" style="height: 100%;">
       <ion-col class="ion-align-self-center">
         <figure class="ion-text-center">
@@ -54,5 +54,6 @@
     </ion-row>
   </ion-grid>
 
-  <ion-button [routerLink]="['/dashboard']" expand="block">Panel de administración</ion-button>
+  <ion-button color="success" [disabled]="!authService.isLoggedIn" [routerLink]="['/dashboard']" expand="block">Panel de
+    administración</ion-button>
 </ion-content>
