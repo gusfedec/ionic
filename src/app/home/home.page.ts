@@ -45,7 +45,7 @@ export class HomePage {
     const animation = this.animationController
       .create()
       .addElement(document.querySelector('#container'))
-      .duration(300000)
+      .duration(3000)
       .fromTo('opacity', '1', '0');
     await animation.play();
 
