@@ -3,17 +3,28 @@
     <ion-grid style="height: 100%;">
       <ion-row class="ion-justify-content-center" style="height:20%">
         <ion-col class="ion-align-self-center ion-text-center">
-          <ion-text color="dark">Gustavo Casas</ion-text>
+          <ion-text class="title" color="dark">Gustavo Casas</ion-text>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center" style="height:60%">
-        <ion-col class="ion-align-self-center">
-          <ion-img src="./assets/img/icon_splash.png"></ion-img>
+        <ion-col class="">
+          <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center ion-text-center">
+              <img class="splash ion-text-center" src="./assets/img/icon.png" style="width:256px;" />
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="">
+            <ion-col class="">
+              <img class="logo" src="./assets/img/logo.png" style="width: 20px;" />
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
+
       <ion-row class="ion-justify-content-center" style="height:20%">
         <ion-col class="ion-align-self-center ion-text-center">
-          <ion-text color="dark">4 A</ion-text>
+          <ion-text color="dark" (click)="stop()">4 A</ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>
