@@ -26,9 +26,7 @@ export class LoginPage implements OnInit {
     public toastService: ToastService,
     public errorsService: ErrorsService,
     public formBuilder: FormBuilder
-  ) {
-    console.log(this.authService.isLogg);
-  }
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({

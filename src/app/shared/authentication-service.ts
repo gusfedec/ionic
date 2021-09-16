@@ -75,7 +75,7 @@ export class AuthenticationService {
       });
   }
 
-  get isLogg(): boolean {
+  get isLogged(): boolean {
     return this.subject.value;
   }
 
