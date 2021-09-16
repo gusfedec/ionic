@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AnimationController } from '@ionic/angular';
+import { AnimationController, Platform } from '@ionic/angular';
 import { AnimationService } from '../shared/animation.service';
 
 @Component({
@@ -12,11 +12,30 @@ import { AnimationService } from '../shared/animation.service';
 export class HomePage {
   animation: any;
   animation1: any;
+  subscribe: any;
   constructor(
     private animationController: AnimationController,
     private router: Router,
-    private animationService: AnimationService
-  ) {}
+    private animationService: AnimationService,
+    public platform: Platform
+  ) {
+    console.log('ab');
+
+    this.subscribe = this.platform.backButton.subscribeWithPriority(
+      666666,
+      () => {
+        console.log('adfdfds');
+        console.log(this.constructor.name);
+
+        /* if (this.constructor.name == 'LoginPage') {
+          console.log('ac');
+          if (window.confirm('??')) {
+            navigator['app'].exitApp();
+          }
+        } */
+      }
+    );
+  }
 
   async ionViewDidEnter() {
     SplashScreen.hide();
