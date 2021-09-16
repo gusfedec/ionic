@@ -45,6 +45,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./home/home.module').then((m) => m.HomePageModule),
   },
+  {
+    path: 'botones-principales',
+    loadChildren: () =>
+      import('./botones-principales/botones-principales.module').then(
+        (m) => m.BotonesPrincipalesPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

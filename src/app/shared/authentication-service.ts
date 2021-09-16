@@ -9,12 +9,14 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   userData: any;
+  subject = new BehaviorSubject(false);
 
   constructor(
     public afStore: AngularFirestore,
@@ -25,13 +27,13 @@ export class AuthenticationService {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
         console.log(user);
-
+        this.subject.next(true);
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user'));
       } else {
         console.log('a');
-
+        this.subject.next(false);
         localStorage.setItem('user', null);
         JSON.parse(localStorage.getItem('user'));
       }
@@ -44,7 +46,7 @@ export class AuthenticationService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         console.log(result);
-
+        this.subject.next(true);
         this.SetUserData(result.user);
       });
   }
@@ -54,6 +56,7 @@ export class AuthenticationService {
     return this.ngFireAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
+        this.subject.next(true);
         this.SetUserData(result.user);
       });
   }
@@ -70,6 +73,10 @@ export class AuthenticationService {
       .catch((error) => {
         window.alert(error);
       });
+  }
+
+  get isLogg(): boolean {
+    return this.subject.value;
   }
 
   // Returns true when user is looged in

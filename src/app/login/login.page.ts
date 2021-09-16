@@ -26,7 +26,9 @@ export class LoginPage implements OnInit {
     public toastService: ToastService,
     public errorsService: ErrorsService,
     public formBuilder: FormBuilder
-  ) {}
+  ) {
+    console.log(this.authService.isLogg);
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -52,7 +54,7 @@ export class LoginPage implements OnInit {
         .SignIn(this.loginForm.value.email, this.loginForm.value.password)
         .then((res) => {
           console.log(res);
-          this.router.navigate(['messagelogin']);
+          this.router.navigate(['botones-principales']);
           /* if (this.authService.isEmailVerified) {
 
         } else {
@@ -120,7 +122,7 @@ export class LoginPage implements OnInit {
       .SignIn(data.email, data.password)
       .then((res) => {
         console.log(res);
-        this.router.navigate(['messagelogin']);
+        this.router.navigate(['botones-principales']);
       })
       .catch((error) => {
         console.log(error.code);
