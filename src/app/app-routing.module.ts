@@ -51,7 +51,7 @@ const routes: Routes = [
       import('./botones-principales/botones-principales.module').then(
         (m) => m.BotonesPrincipalesPageModule
       ),
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
   },
 ];
 

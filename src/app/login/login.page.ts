@@ -33,6 +33,7 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+    console.log(this.authService.isLogged);
   }
 
   get errorControl() {
