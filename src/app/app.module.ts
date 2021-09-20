@@ -13,9 +13,10 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GetUserFromEmail } from './get-user-from-email.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, GetUserFromEmail],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -29,6 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   providers: [
+    GetUserFromEmail,
     AngularFirestoreModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],

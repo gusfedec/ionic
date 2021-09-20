@@ -8,6 +8,7 @@ import { BotonesPrincipalesPageRoutingModule } from './botones-principales-routi
 
 import { BotonesPrincipalesPage } from './botones-principales.page';
 import { LogoutComponent } from '../logout/logout.component';
+import { GetUserFromEmail } from '../get-user-from-email.pipe';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { LogoutComponent } from '../logout/logout.component';
     IonicModule,
     BotonesPrincipalesPageRoutingModule,
   ],
-  declarations: [BotonesPrincipalesPage, LogoutComponent],
+  declarations: [BotonesPrincipalesPage, LogoutComponent, GetUserFromEmail],
 })
 export class BotonesPrincipalesPageModule {}

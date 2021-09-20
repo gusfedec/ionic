@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication-service';
 import { ToastService } from '../shared/toast.service';
+import { GetUserFromEmail } from '../get-user-from-email.pipe';
 
 @Component({
   selector: 'app-logout',
-  template: ` <ion-text>{{ usuario.email }}</ion-text>
+  template: ` <ion-text>{{ usuario.email | getUserFromEmail }}</ion-text>
     <ion-icon
       name="log-out-outline"
       (click)="signOut()"
@@ -19,7 +20,8 @@ export class LogoutComponent implements OnInit {
 
   constructor(
     public authService: AuthenticationService,
-    public toastService: ToastService
+    public toastService: ToastService,
+    public user: GetUserFromEmail
   ) {
     this.usuario = this.authService.getUsuario();
     console.log(this.authService.getUsuario());
