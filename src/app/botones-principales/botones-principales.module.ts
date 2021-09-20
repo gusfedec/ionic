@@ -13,8 +13,8 @@ import { BotonesPrincipalesPage } from './botones-principales.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    BotonesPrincipalesPageRoutingModule
+    BotonesPrincipalesPageRoutingModule,
   ],
-  declarations: [BotonesPrincipalesPage]
+  declarations: [BotonesPrincipalesPage],
 })
 export class BotonesPrincipalesPageModule {}

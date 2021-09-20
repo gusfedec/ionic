@@ -17,6 +17,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class AuthenticationService {
   userData: any;
   subject = new BehaviorSubject(false);
+  usuario = new BehaviorSubject(null);
 
   constructor(
     public afStore: AngularFirestore,
@@ -31,11 +32,13 @@ export class AuthenticationService {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user'));
+        this.usuario.next(this.userData);
       } else {
         console.log('a');
         this.subject.next(false);
         localStorage.setItem('user', null);
         JSON.parse(localStorage.getItem('user'));
+        this.usuario.next(null);
       }
     });
   }
@@ -48,6 +51,7 @@ export class AuthenticationService {
         console.log(result);
         this.subject.next(true);
         this.SetUserData(result.user);
+        this.usuario.next(result.user);
       });
   }
 
@@ -88,6 +92,10 @@ export class AuthenticationService {
 
   getUser(): String {
     return JSON.parse(localStorage.getItem('user'));
+  }
+
+  getUsuario(): any {
+    return this.usuario.value;
   }
 
   // Returns true when user's email is verified

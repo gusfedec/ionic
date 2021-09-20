@@ -53,6 +53,10 @@ const routes: Routes = [
       ),
     //canActivate: [AuthGuard],
   },
+  {
+    path: 'subida',
+    loadChildren: () => import('./subida/subida.module').then( m => m.SubidaPageModule)
+  },
 ];
 
 @NgModule({
