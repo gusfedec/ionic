@@ -21,7 +21,25 @@ export interface Meta {
 @Component({
   selector: 'app-upload',
   template: `
-    <input type="file" (change)="uploadFile($event)" />
+    <ion-item>
+      <ion-button
+        expand="full"
+        class="boton-upload"
+        color="success"
+        (click)="f.click()"
+      >
+        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+        <ion-label slot="end">Subir</ion-label>
+      </ion-button>
+      <input
+        class="ion-hide"
+        #f
+        type="file"
+        (change)="uploadFile($event)"
+        id="file-input"
+        accept="image/png, image/jpeg"
+      />
+    </ion-item>
     <div>{{ uploadPercent | async }}</div>
     <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
     <!--<a [href]="">{{ meta | async }}</a>-->
