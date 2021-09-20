@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { BotonesPrincipalesPageRoutingModule } from './botones-principales-routing.module';
 
 import { BotonesPrincipalesPage } from './botones-principales.page';
+import { LogoutComponent } from '../logout/logout.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { BotonesPrincipalesPage } from './botones-principales.page';
     IonicModule,
     BotonesPrincipalesPageRoutingModule,
   ],
-  declarations: [BotonesPrincipalesPage],
+  declarations: [BotonesPrincipalesPage, LogoutComponent],
 })
 export class BotonesPrincipalesPageModule {}

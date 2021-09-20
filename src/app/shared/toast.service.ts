@@ -38,7 +38,7 @@ export class ToastService {
     this.loading = await this.loadingController.create({
       spinner: 'circular',
       duration: 0,
-      message: 'Click the backdrop to dismiss early...',
+      message: 'Espere por favor...',
       translucent: true,
       cssClass: 'ion-loading-class',
       backdropDismiss: true,
