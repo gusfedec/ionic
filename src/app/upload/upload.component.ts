@@ -11,6 +11,8 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
 import { AuthenticationService } from '../shared/authentication-service';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { ActionSheetController } from '@ionic/angular';
 
 export interface Meta {
   name: string;
@@ -26,6 +28,17 @@ export interface Meta {
         expand="full"
         class="boton-upload"
         color="success"
+        (click)="selectImage()"
+      >
+        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+        <ion-label slot="end">Subir</ion-label>
+      </ion-button>
+      <!--</ion-item>
+    <ion-item>
+      <ion-button
+        expand="full"
+        class="boton-upload"
+        color="success"
         (click)="f.click()"
       >
         <ion-icon lazy="true" slot="start" name="image"></ion-icon>
@@ -35,17 +48,18 @@ export interface Meta {
         class="ion-hide"
         #f
         type="file"
-        (change)="uploadFile($event)"
+        (change)="selectImage()"
         id="file-input"
         accept="image/png, image/jpeg"
       />
+    </ion-item>-->
+      <div>{{ uploadPercent | async }}</div>
+      <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
+      <!--<a [href]="">{{ meta | async }}</a>-->
+      <img style="width:100px;" [src]="downloadURL | async" />
+      <!--<pre *ngIf="meta | async"><code>{{(meta | async)?.size}}</code></pre>-->
+      <!--<pre *ngIf="meta | async"><code>{{(meta.size}}</code></pre>-->
     </ion-item>
-    <div>{{ uploadPercent | async }}</div>
-    <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
-    <!--<a [href]="">{{ meta | async }}</a>-->
-    <img style="width:100px;" [src]="downloadURL | async" />
-    <!--<pre *ngIf="meta | async"><code>{{(meta | async)?.size}}</code></pre>-->
-    <!--<pre *ngIf="meta | async"><code>{{(meta.size}}</code></pre>-->
   `,
   styleUrls: ['./upload.component.scss'],
 })
@@ -59,10 +73,14 @@ export class UploadComponent implements OnInit {
   usuario: any;
   fotosCollection: AngularFirestoreCollection;
 
+  image: any;
+
   constructor(
     private storage: AngularFireStorage,
     private authService: AuthenticationService,
-    private afStore: AngularFirestore
+    private afStore: AngularFirestore,
+    private camera: Camera,
+    public actionSheetController: ActionSheetController
   ) {
     //this.user = this.authService.getUser();
     this.usuario = this.authService.getUsuario();
@@ -72,11 +90,79 @@ export class UploadComponent implements OnInit {
     console.log(this.usuario);
   }
 
-  uploadFile(event) {
-    const file = event.target.files[0];
-    const filePath = `cosas-lindas/${new Date().getTime()}_${file.name}`;
+  base64ToImage(dataURI) {
+    const fileDate = dataURI.split(',');
+    // const mime = fileDate[0].match(/:(.*?);/)[1];
+    const byteString = atob(fileDate[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([arrayBuffer], { type: 'image/png' });
+    return blob;
+  }
+
+  pickImage(sourceType) {
+    console.log(sourceType);
+
+    const options: CameraOptions = {
+      quality: 50,
+      sourceType: sourceType,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+    };
+    this.camera.getPicture(options).then(
+      (imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        this.image = 'data:image/jpeg;base64,' + imageData;
+        console.log(this.image);
+        let file = this.base64ToImage(this.image);
+        this.uploadFile(file);
+      },
+      (err) => {
+        // Handle error
+      }
+    );
+  }
+
+  async selectImage() {
+    console.log('a');
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Select Image source',
+      buttons: [
+        {
+          text: 'Use Camera',
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.CAMERA);
+          },
+        },
+        {
+          text: 'Load from Library',
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+          },
+        },
+
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+    await actionSheet.present();
+    const { role } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  }
+
+  uploadFile(file) {
+    //const file = event.target.files[0];
+    const filePath = `cosas-lindas/${new Date().getTime()}_imagen`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);
+    console.log(file);
 
     // observe percentage changes
     this.uploadPercent = task.percentageChanges();

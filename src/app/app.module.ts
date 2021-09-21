@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { Camera } from '@ionic-native/camera/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +31,7 @@ import { GetUserFromEmail } from './get-user-from-email.pipe';
     ReactiveFormsModule,
   ],
   providers: [
+    Camera,
     GetUserFromEmail,
     AngularFirestoreModule,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
