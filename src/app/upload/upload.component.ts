@@ -13,6 +13,7 @@ import {
 import { AuthenticationService } from '../shared/authentication-service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 export interface Meta {
   name: string;
@@ -33,26 +34,7 @@ export interface Meta {
         <ion-icon lazy="true" slot="start" name="image"></ion-icon>
         <ion-label slot="end">Subir</ion-label>
       </ion-button>
-      <!--</ion-item>
-    <ion-item>
-      <ion-button
-        expand="full"
-        class="boton-upload"
-        color="success"
-        (click)="f.click()"
-      >
-        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
-        <ion-label slot="end">Subir</ion-label>
-      </ion-button>
-      <input
-        class="ion-hide"
-        #f
-        type="file"
-        (change)="selectImage()"
-        id="file-input"
-        accept="image/png, image/jpeg"
-      />
-    </ion-item>-->
+
       <div>{{ uploadPercent | async }}</div>
       <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
       <!--<a [href]="">{{ meta | async }}</a>-->
@@ -72,15 +54,17 @@ export class UploadComponent implements OnInit {
   user: any;
   usuario: any;
   fotosCollection: AngularFirestoreCollection;
-
   image: any;
+  dir: string;
+  seccion: string;
 
   constructor(
     private storage: AngularFireStorage,
     private authService: AuthenticationService,
     private afStore: AngularFirestore,
     private camera: Camera,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    private activatedRoute: ActivatedRoute
   ) {
     //this.user = this.authService.getUser();
     this.usuario = this.authService.getUsuario();
@@ -88,6 +72,10 @@ export class UploadComponent implements OnInit {
     console.log(this.authService.getUsuario());
     console.log(this.authService.isLogged);
     console.log(this.usuario);
+    this.activatedRoute.params.subscribe((params) => {
+      this.seccion = params['cosas'];
+      this.dir = params['cosas'] == 'lindas' ? 'cosas-lindas' : 'cosas-feas';
+    });
   }
 
   base64ToImage(dataURI) {
@@ -159,7 +147,7 @@ export class UploadComponent implements OnInit {
 
   uploadFile(file) {
     //const file = event.target.files[0];
-    const filePath = `cosas-lindas/${new Date().getTime()}_imagen`;
+    const filePath = `${this.dir}/${new Date().getTime()}_imagen`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);
     console.log(file);
@@ -192,6 +180,8 @@ export class UploadComponent implements OnInit {
               name: this.meta.name,
               size: this.meta.size,
               date: this.meta.timeCreated,
+              seccion: this.seccion,
+              likes: 0,
             });
             console.log(this.usuario.uid);
 

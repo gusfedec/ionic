@@ -54,8 +54,9 @@ const routes: Routes = [
     //canActivate: [AuthGuard],
   },
   {
-    path: 'subida',
-    loadChildren: () => import('./subida/subida.module').then( m => m.SubidaPageModule)
+    path: 'subida/:cosas',
+    loadChildren: () =>
+      import('./subida/subida.module').then((m) => m.SubidaPageModule),
   },
 ];
 
