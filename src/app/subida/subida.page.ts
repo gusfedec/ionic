@@ -71,7 +71,7 @@ export class SubidaPage implements OnInit {
                 })
               );
           });
-          return combineLatest(...res);
+          return combineLatest([...res]);
         })
       )
       .subscribe((fotos) => {
