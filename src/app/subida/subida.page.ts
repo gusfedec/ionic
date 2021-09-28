@@ -7,6 +7,7 @@ import { AuthenticationService } from '../shared/authentication-service';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, concat, forkJoin } from 'rxjs';
 import { flatMap, map, mergeMap, switchMap } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-subida',
@@ -29,7 +30,7 @@ export class SubidaPage implements OnInit {
   queryIsLike: Boolean;
   userIsLike: Boolean = false;
 
-  async ngOnInit() {
+  ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.cosas = params['cosas'];
     });
@@ -41,7 +42,43 @@ export class SubidaPage implements OnInit {
         ref.orderBy('date', 'desc').where('seccion', '==', this.cosas)
       )
       .snapshotChanges();
-    foto.subscribe((dataFotos) => {
+    foto
+      .pipe(
+        switchMap((fotos) => {
+          const res = fotos.map((r) => {
+            return this.afStore
+              .collection('fotos')
+              .doc(r.payload.doc.id)
+              .collection('likes')
+              .doc(this.usuario.uid)
+              .snapshotChanges()
+              .pipe(
+                map((fa) => {
+                  if (fa.payload.exists) {
+                    this.userIsLike = true;
+                  } else {
+                    this.userIsLike = false;
+                  }
+                  return {
+                    own: r.payload.doc.data()['own'],
+                    name: r.payload.doc.data()['name'],
+                    file: r.payload.doc.data()['file'],
+                    date: r.payload.doc.data()['date'],
+                    likes: r.payload.doc.data()['likes'],
+                    key: r.payload.doc.id,
+                    isLike: this.userIsLike,
+                  };
+                })
+              );
+          });
+          return combineLatest(...res);
+        })
+      )
+      .subscribe((fotos) => {
+        console.log(fotos);
+        this.fotos = fotos;
+      });
+    /* foto.subscribe((dataFotos) => {
       this.fotos = dataFotos.map((e) => {
         this.afStore
           .collection('fotos')
@@ -68,7 +105,7 @@ export class SubidaPage implements OnInit {
       });
 
       console.log(this.fotos);
-    });
+    }); */
 
     /* let foto = this.afStore
       .collection(
@@ -186,7 +223,7 @@ export class SubidaPage implements OnInit {
     this.afStore.doc(`fotos/${key}`).update({
       likes: likesNumber + 1,
     });
-    this.afStore
+    /* this.afStore
       .collection('fotos')
       .doc(key)
       .collection('likes')
@@ -196,7 +233,7 @@ export class SubidaPage implements OnInit {
         if (changes.payload.exists) {
           this.userIsLike = true;
         }
-      });
+      }); */
   }
 
   disLike(key, likesNumber) {
