@@ -24,24 +24,22 @@ export interface Meta {
 @Component({
   selector: 'app-upload',
   template: `
-    <ion-item>
-      <ion-button
-        expand="full"
-        class="boton-upload"
-        color="success"
-        (click)="selectImage()"
-      >
-        <ion-icon lazy="true" slot="start" name="image"></ion-icon>
-        <ion-label slot="end">Subir</ion-label>
-      </ion-button>
+    <ion-button
+      expand="full"
+      class="boton-upload"
+      color="success"
+      (click)="selectImage()"
+    >
+      <ion-icon lazy="true" slot="start" name="image"></ion-icon>
+      <ion-label slot="end">Subir</ion-label>
+    </ion-button>
 
-      <div>{{ uploadPercent | async }}</div>
-      <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
-      <!--<a [href]="">{{ meta | async }}</a>-->
-      <img style="width:100px;" [src]="downloadURL | async" />
-      <!--<pre *ngIf="meta | async"><code>{{(meta | async)?.size}}</code></pre>-->
-      <!--<pre *ngIf="meta | async"><code>{{(meta.size}}</code></pre>-->
-    </ion-item>
+    <div>{{ uploadPercent | async }}</div>
+    <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
+    <!--<a [href]="">{{ meta | async }}</a>-->
+    <img style="width:100px;" [src]="downloadURL | async" />
+    <!--<pre *ngIf="meta | async"><code>{{(meta | async)?.size}}</code></pre>-->
+    <!--<pre *ngIf="meta | async"><code>{{(meta.size}}</code></pre>-->
   `,
   styleUrls: ['./upload.component.scss'],
 })

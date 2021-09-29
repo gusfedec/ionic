@@ -11,7 +11,18 @@
 </ion-header>
 
 <ion-content>
-  <app-upload></app-upload>
+  <ion-row>
+    <ion-col>
+      <app-upload></app-upload>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="full" class="boton-upload" color="success" [routerLink]="['/graficos']">
+        <ion-icon name="pie-chart-outline"></ion-icon>
+        <ion-label slot="end">Graficos</ion-label>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
   <!-- <ion-item *ngFor="let foto of fotos">
     <img src="{{foto.file}}" alt="{{foto.name}}" style="width: 100px;" />{{foto.own | slice:0:5}}
     <ion-icon *ngIf="!foto.isLike" (click)="like(foto.key, foto.likes)" name="heart-outline"></ion-icon>

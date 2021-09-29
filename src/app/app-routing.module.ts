@@ -58,6 +58,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./subida/subida.module').then((m) => m.SubidaPageModule),
   },
+  {
+    path: 'graficos',
+    loadChildren: () => import('./graficos/graficos.module').then( m => m.GraficosPageModule)
+  },
 ];
 
 @NgModule({
