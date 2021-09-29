@@ -5,7 +5,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import { AuthenticationService } from '../shared/authentication-service';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, concat, forkJoin } from 'rxjs';
+import { BehaviorSubject, concat, forkJoin, Observable } from 'rxjs';
 import { flatMap, map, mergeMap, switchMap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 
@@ -27,14 +27,13 @@ export class SubidaPage implements OnInit {
   fotos: any;
   fotosPropias: any;
   isLike = new BehaviorSubject(false);
-  queryIsLike: Boolean;
   userIsLike: Boolean = false;
+  arr;
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       this.cosas = params['cosas'];
     });
-    this.queryIsLike = this.gusta();
     //let foto = this.afStore.collection('fotos').snapshotChanges();
 
     let foto = this.afStore
@@ -162,34 +161,6 @@ export class SubidaPage implements OnInit {
     //.where('id', '==', 'fK3ddutEpD2qQqRMXNW5').get()
   }
 
-  gusta() {
-    console.log('sasasasasa');
-
-    /* let likes = this.afStore
-      .collection(`fotos/${fotoKey}/likes`)
-      .snapshotChanges();
-    likes.subscribe((data) => {
-      let fotos = data.map((e) => {
-        e.payload.doc.data()['gusta'];
-      });
-      console.log(data);
-      console.log(fotos);
-    }); */
-    /*     let likes = this.afStore
-      .collection('fotos')
-      .doc(fotoKey)
-      .collection('likes')
-      .doc(this.usuario.uid)
-      .get();
-
-    likes.subscribe((data) => {
-      console.log(data);
-      //console.log(fotos);
-    });
-*/
-    return this.isLike.value;
-  }
-
   like(key, likesNumber) {
     console.log(key);
     /* const likeRef: AngularFirestoreDocument<any> = this.afStore.doc(
@@ -201,10 +172,6 @@ export class SubidaPage implements OnInit {
     this.isLike.next(!this.isLike.value);
     console.log(this.isLike.value);
 
-    let like = {
-      //user: this.usuario.uid,
-      gusta: this.isLike.value,
-    };
     /*this.afStore.collection(`fotos/${key}/likes`).add(like);
     this.afStore
       .collection(`fotos/${key}/likes`)
@@ -247,10 +214,6 @@ export class SubidaPage implements OnInit {
     this.isLike.next(!this.isLike.value);
     console.log(this.isLike.value);
 
-    let like = {
-      //user: this.usuario.uid,
-      gusta: this.isLike.value,
-    };
     /*this.afStore.collection(`fotos/${key}/likes`).add(like);
     this.afStore
       .collection(`fotos/${key}/likes`)

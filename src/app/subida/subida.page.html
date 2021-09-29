@@ -6,11 +6,51 @@
 
 <ion-content>
   <app-upload></app-upload>
-  <ion-item *ngFor="let foto of fotos">
+  <!-- <ion-item *ngFor="let foto of fotos">
     <img src="{{foto.file}}" alt="{{foto.name}}" style="width: 100px;" />{{foto.own | slice:0:5}}
     <ion-icon *ngIf="!foto.isLike" (click)="like(foto.key, foto.likes)" name="heart-outline"></ion-icon>
     <ion-icon *ngIf="foto.isLike" (click)="disLike(foto.key, foto.likes)" name="heart"></ion-icon>
     dd
-  </ion-item>
+  </ion-item> -->
+
+  <ion-card *ngFor="let foto of fotos">
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-icon style="font-size: 40px;" name="person"></ion-icon>
+      </ion-avatar>
+      <ion-label>
+        <h3>{{foto.own | slice:0:5}}</h3>
+        <p>{{foto.date | date}}</p>
+      </ion-label>
+    </ion-item>
+
+    <img src="{{foto.file}}" alt="{{foto.name}}">
+    <!-- <ion-card-header>
+      <ion-card-title>Hotel Panama Garden</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus iaculis mollis ligula sed ultrices.
+    </ion-card-content> -->
+
+    <ion-footer>
+      <ion-row class="ion-align-items-center">
+        <ion-col class="ion-text-center">
+          <button>
+            <ion-icon name="heart"></ion-icon>
+            <div>{{foto.likes}} me gusta</div>
+          </button>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <ion-icon style="font-size: 40px;" *ngIf="!foto.isLike" (click)="like(foto.key, foto.likes)"
+            name="heart-outline"></ion-icon>
+          <ion-icon style="font-size: 40px;" *ngIf="foto.isLike" (click)="disLike(foto.key, foto.likes)" name="heart">
+          </ion-icon>
+        </ion-col>
+        <ion-col class="ion-text-center">
+
+        </ion-col>
+      </ion-row>
+    </ion-footer>
+  </ion-card>
 
 </ion-content>

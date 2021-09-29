@@ -142,6 +142,14 @@ export class AuthenticationService {
     });
   }
 
+  getUserByKey(key) {
+    return this.afStore
+      .collection('users')
+      .doc(key)
+      .snapshotChanges()
+      .toPromise();
+  }
+
   // Sign-out
   SignOut() {
     return this.ngFireAuth.signOut().then(() => {
