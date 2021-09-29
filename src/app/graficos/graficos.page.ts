@@ -79,7 +79,7 @@ export class GraficosPage implements AfterViewInit, OnInit {
         type: 'bar',
         data: {
           //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          labels: this.fotosLindas.map((a) => a.file),
+          labels: [...Array(this.fotosLindas.length).keys()].map((i) => i + 1),
           datasets: [
             {
               label: '# de votos',
@@ -119,13 +119,13 @@ export class GraficosPage implements AfterViewInit, OnInit {
           },
         },
       });
-    }, 3000);
+    }, 2000);
 
     setTimeout(() => {
       this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
         type: 'doughnut',
         data: {
-          labels: this.fotosFeas.map((a) => a.file),
+          labels: [...Array(this.fotosFeas.length).keys()].map((i) => i + 1),
           datasets: [
             {
               label: '# de votos',
@@ -150,6 +150,6 @@ export class GraficosPage implements AfterViewInit, OnInit {
           ],
         },
       });
-    }, 3000);
+    }, 2000);
   }
 }
