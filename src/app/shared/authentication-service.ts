@@ -143,11 +143,7 @@ export class AuthenticationService {
   }
 
   getUserByKey(key) {
-    return this.afStore
-      .collection('users')
-      .doc(key)
-      .snapshotChanges()
-      .toPromise();
+    return this.afStore.collection('users').doc(key).snapshotChanges();
   }
 
   // Sign-out

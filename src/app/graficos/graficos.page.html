@@ -13,7 +13,8 @@
       <ion-card-header>
         Graficos de Barras: Cosas Lindas
       </ion-card-header>
-      <ion-card-content>
+      <ion-card-content class="ion-text-center">
+        <ion-spinner *ngIf="cargandoTorta" name="dots" style="color: green;"></ion-spinner>
         <canvas #barCanvas></canvas>
       </ion-card-content>
     </ion-card>
@@ -22,7 +23,8 @@
       <ion-card-header>
         Graficos de torta: Cosas Feas
       </ion-card-header>
-      <ion-card-content>
+      <ion-card-content class="ion-text-center">
+        <ion-spinner *ngIf="cargandoBarra" name="dots" style="color: green;"></ion-spinner>
         <canvas #doughnutCanvas></canvas>
       </ion-card-content>
     </ion-card>

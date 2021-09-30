@@ -28,7 +28,7 @@ export class SubidaPage implements OnInit {
   fotosPropias: any;
   isLike = new BehaviorSubject(false);
   userIsLike: Boolean = false;
-  arr;
+  cargando: Boolean = true;
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
@@ -76,6 +76,7 @@ export class SubidaPage implements OnInit {
       .subscribe((fotos) => {
         console.log(fotos);
         this.fotos = fotos;
+        this.cargando = false;
       });
     /* foto.subscribe((dataFotos) => {
       this.fotos = dataFotos.map((e) => {

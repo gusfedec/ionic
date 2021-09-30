@@ -29,6 +29,11 @@
     <ion-icon *ngIf="foto.isLike" (click)="disLike(foto.key, foto.likes)" name="heart"></ion-icon>
     dd
   </ion-item> -->
+  <ion-row class="ion-align-items-center">
+    <ion-col class="ion-text-center">
+      <ion-spinner *ngIf="cargando" name="dots" style="color: green;"></ion-spinner>
+    </ion-col>
+  </ion-row>
 
   <ion-card *ngFor="let foto of fotos">
     <ion-item>
@@ -41,7 +46,8 @@
       </ion-label>
     </ion-item>
 
-    <img src="{{foto.file}}" alt="{{foto.name}}">
+    <img src="{{foto.file}}" alt="{{foto.name}}" style="background-image: url(../../assets/img/camara-fotografica.png);"
+      width="340px" height="453px">
     <!-- <ion-card-header>
       <ion-card-title>Hotel Panama Garden</ion-card-title>
     </ion-card-header>

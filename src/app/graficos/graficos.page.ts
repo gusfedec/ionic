@@ -25,6 +25,8 @@ export class GraficosPage implements AfterViewInit, OnInit {
   fotos: any;
   fotosFeas: any;
   fotosLindas: any;
+  cargandoTorta: Boolean = true;
+  cargandoBarra: Boolean = true;
 
   constructor(private afStore: AngularFirestore) {}
 
@@ -119,6 +121,7 @@ export class GraficosPage implements AfterViewInit, OnInit {
           },
         },
       });
+      this.cargandoBarra = false;
     }, 2000);
 
     setTimeout(() => {
@@ -150,6 +153,7 @@ export class GraficosPage implements AfterViewInit, OnInit {
           ],
         },
       });
+      this.cargandoTorta = false;
     }, 2000);
   }
 }
