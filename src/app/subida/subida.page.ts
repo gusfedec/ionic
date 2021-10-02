@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, concat, forkJoin, Observable } from 'rxjs';
 import { flatMap, map, mergeMap, switchMap } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-subida',
@@ -19,7 +20,8 @@ export class SubidaPage implements OnInit {
   constructor(
     private afStore: AngularFirestore,
     private authService: AuthenticationService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private storage: AngularFireStorage
   ) {
     this.usuario = this.authService.getUsuario();
   }
@@ -233,5 +235,21 @@ export class SubidaPage implements OnInit {
     this.afStore.doc(`fotos/${key}`).update({
       likes: likesNumber - 1,
     });
+  }
+
+  //Borra fotos, pero no borra la coleccion de likes, queda suelta
+  delete(foto) {
+    const filePath = this.cosas == 'lindas' ? `cosas-lindas/` : `cosas-feas/`;
+    this.afStore
+      .collection('fotos')
+      .doc(foto.key)
+      .delete()
+      .then((res) => {
+        const storageRef = this.storage.ref(filePath);
+        storageRef.child(foto.name).delete();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 }

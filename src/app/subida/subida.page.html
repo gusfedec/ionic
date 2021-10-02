@@ -70,7 +70,8 @@
           </ion-icon>
         </ion-col>
         <ion-col class="ion-text-center">
-
+          <ion-icon style="font-size: 40px;" *ngIf="foto.own == usuario.uid" (click)="delete(foto)"
+            name="trash-outline"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-footer>
