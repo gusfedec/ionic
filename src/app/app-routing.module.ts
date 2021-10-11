@@ -62,6 +62,10 @@ const routes: Routes = [
     path: 'graficos',
     loadChildren: () => import('./graficos/graficos.module').then( m => m.GraficosPageModule)
   },
+  {
+    path: 'mis-fotos',
+    loadChildren: () => import('./mis-fotos/mis-fotos.module').then( m => m.MisFotosPageModule)
+  },
 ];
 
 @NgModule({
