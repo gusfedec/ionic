@@ -6,8 +6,10 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AlertController } from '@ionic/angular';
 import { Chart } from 'chart.js';
 import { combineLatest, switchMap } from 'rxjs/operators';
+import { ToastService } from '../shared/toast.service';
 
 @Component({
   selector: 'app-graficos',
@@ -28,7 +30,11 @@ export class GraficosPage implements AfterViewInit, OnInit {
   cargandoTorta: Boolean = true;
   cargandoBarra: Boolean = true;
 
-  constructor(private afStore: AngularFirestore) {}
+  constructor(
+    private afStore: AngularFirestore,
+    public toastService: ToastService,
+    public alertController: AlertController
+  ) {}
 
   ngOnInit(): void {
     let foto = this.afStore
@@ -81,9 +87,15 @@ export class GraficosPage implements AfterViewInit, OnInit {
         type: 'bar',
         data: {
           //labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          labels: [...Array(this.fotosLindas.length).keys()].map((i) => i + 1),
+          //labels: [...Array(this.fotosLindas.length).keys()].map((i) => i + 1),
+          labels: this.fotosLindas.map((a) => {
+            return a.file;
+          }),
           datasets: [
             {
+              file: this.fotosLindas.map((a) => {
+                return a.file;
+              }),
               label: '# de votos',
               //data: [12, 19, 3, 5, 2, 3],
               data: this.fotosLindas.map((a) => {
@@ -118,6 +130,18 @@ export class GraficosPage implements AfterViewInit, OnInit {
                 },
               },
             ],
+            xAxes: [
+              {
+                ticks: {
+                  fontSize: 0,
+                },
+              },
+            ],
+          },
+          onClick: (e, item) => {
+            console.log(item);
+
+            this.presentAlert(item[0]._model.label);
           },
         },
       });
@@ -128,7 +152,10 @@ export class GraficosPage implements AfterViewInit, OnInit {
       this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
         type: 'doughnut',
         data: {
-          labels: [...Array(this.fotosFeas.length).keys()].map((i) => i + 1),
+          //labels: [...Array(this.fotosFeas.length).keys()].map((i) => i + 1),
+          labels: this.fotosFeas.map((a) => {
+            return a.file;
+          }),
           datasets: [
             {
               label: '# de votos',
@@ -152,8 +179,27 @@ export class GraficosPage implements AfterViewInit, OnInit {
             },
           ],
         },
+        options: {
+          onClick: (e, itemPie) => {
+            console.log(e);
+            console.log(itemPie);
+            console.log(itemPie[0]._chart.data.labels[itemPie[0]._index]);
+            this.presentAlert(itemPie[0]._chart.data.labels[itemPie[0]._index]);
+          },
+        },
       });
       this.cargandoTorta = false;
     }, 2000);
+  }
+
+  async presentAlert(file) {
+    const alert = await this.alertController.create({
+      header: '',
+      subHeader: 'Foto Seleccionada',
+      message: "<img src='" + file + "' />",
+      buttons: ['OK'],
+    });
+
+    await alert.present();
   }
 }
