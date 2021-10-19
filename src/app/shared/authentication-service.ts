@@ -10,6 +10,7 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,11 @@ export class AuthenticationService {
         this.usuario.next(null);
       }
     });
+  }
+
+  // Pipe first value emitted and convert to promise
+  isLoggedInn() {
+    return this.ngFireAuth.authState.pipe(first()).toPromise();
   }
 
   // Login in with email/password

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
+import { BackGuard } from './back.guard';
 
 const routes: Routes = [
   {
@@ -10,6 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'registration',
+    canActivate: [BackGuard],
     loadChildren: () =>
       import('./registration/registration.module').then(
         (m) => m.RegistrationPageModule
@@ -24,6 +26,7 @@ const routes: Routes = [
   }, */
   {
     path: 'login',
+    canActivate: [BackGuard],
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginPageModule),
   },
@@ -47,6 +50,7 @@ const routes: Routes = [
   },
   {
     path: 'botones-principales',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./botones-principales/botones-principales.module').then(
         (m) => m.BotonesPrincipalesPageModule
@@ -55,16 +59,21 @@ const routes: Routes = [
   },
   {
     path: 'subida/:cosas',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./subida/subida.module').then((m) => m.SubidaPageModule),
   },
   {
     path: 'graficos',
-    loadChildren: () => import('./graficos/graficos.module').then( m => m.GraficosPageModule)
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./graficos/graficos.module').then((m) => m.GraficosPageModule),
   },
   {
     path: 'mis-fotos',
-    loadChildren: () => import('./mis-fotos/mis-fotos.module').then( m => m.MisFotosPageModule)
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./mis-fotos/mis-fotos.module').then((m) => m.MisFotosPageModule),
   },
 ];
 
